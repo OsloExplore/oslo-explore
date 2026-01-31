@@ -649,7 +649,11 @@ footer p {
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 750px) {
+    .hero {
+        margin-top: 150px;
+    }
+
     .hero h2,
     .about-hero h2,
     .contact-hero h2 {
@@ -662,13 +666,25 @@ footer p {
         font-size: 18px;
     }
 
+    header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        position: static;
+        transform: none;
+        margin-top: 0;
+    }
+
     nav ul {
         flex-direction: column;
         align-items: center;
+        gap: 10px;
     }
 
     nav ul li {
-        margin: 10px 0;
+        margin: 0;
     }
 
     .tours-grid,
