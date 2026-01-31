@@ -678,7 +678,6 @@ footer p {
     }
 
     nav ul {
-        flex-direction: column;
         align-items: center;
         gap: 10px;
     }
