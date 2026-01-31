@@ -1,0 +1,12 @@
+- [x] Add date picker/calendar widget to the modal for selecting tour dates.
+- [x] Enhance the modal with a multi-step booking form: collect name, email, phone, participants, special requests.
+- [x] Generate a unique booking reference (e.g., "OSLO-2023-12345").
+- [x] Simulate email confirmation (console log for now, alert later).
+- [x] Update localStorage to store full booking details.
+- [x] Update tours.html: Add calendar container in modal.
+- [x] Update java.js: Update modal HTML, add date picker logic, enhance booking function.
+- [x] Update style.css: Style new form elements.
+- [x] Test calendar and form on tours page.
+- [x] Ensure mobile compatibility.
+- [x] Make layout modern like booking.com/Airbnb with header, progress bar, better styling.
+- [x] Replace default date input with modern calendar popup using Flatpickr.

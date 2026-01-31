@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours - Oslo Explore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="BIlder/OsloExploreLogo.jpg" alt="Oslo Explore Logo" class="logo">
+            <nav>
+                <ul>
+                   <li><a href="index.html">Home</a></li>
+                    <li><a href="tours.html">Tours</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="tours-page">
+        <div class="container">
+            <h2>All Tours</h2>
+            <div class="search-filter-container">
+                <input type="text" id="tour-search" placeholder="Search tours...">
+                <select id="price-filter">
+                    <option value="">All Prices</option>
+                    <option value="low">Under 400 kr</option>
+                    <option value="medium">400-450 kr</option>
+                    <option value="high">Over 450 kr</option>
+                </select>
+            </div>
+            <div class="tours-grid">
+                <div class="tour-card">
+                    <img src="BIlder/Opera house from the front.jpg" alt="Oslo Fjord Tour">
+                    <h3>Oslo Fjord Cruise</h3>
+                    <p>Explore the stunning Oslo Fjord with breathtaking views and expert commentary.</p>
+                    <span class="price">500 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+                <div class="tour-card">
+                    <img src="BIlder/Oslo boat port west.jpg" alt="Viking Museum Tour">
+                    <h3>Viking Museum Tour</h3>
+                    <p>Dive into Norway's Viking history at the Viking Ship Museum with a knowledgeable guide.</p>
+                    <span class="price">400 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+                <div class="tour-card">
+                    <img src="BIlder/Oslo jernbanetorget restaurant.jpg" alt="City Walking Tour">
+                    <h3>Oslo City Walking Tour</h3>
+                    <p>Walk through the heart of Oslo and learn about its culture, history, and landmarks.</p>
+                    <span class="price">350 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+                <div class="tour-card">
+                    <img src="BIlder/Oslo city banner.jpg" alt="Royal Palace Tour">
+                    <h3>Royal Palace Tour</h3>
+                    <p>Visit the Royal Palace and learn about Norway's monarchy and royal history.</p>
+                    <span class="price">375 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+                <div class="tour-card">
+                    <img src="BIlder/Frognerparken.jpg" alt="Fram Museum Tour">
+                    <h3>Fram Museum Tour</h3>
+                    <p>Explore polar exploration history at the Fram Museum, home to famous ships.</p>
+                    <span class="price">450 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+                <div class="tour-card">
+                    <img src="BIlder/Aker Brygge.jpg" alt="Norwegian Museum of Cultural History">
+                    <h3>Museum of Cultural History Tour</h3>
+                    <p>Discover Norway's cultural heritage through exhibits and outdoor museums.</p>
+                    <span class="price">380 kr</span>
+                    <button class="btn">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Oslo Explore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="java.js"></script>
+</body>
+</html>
