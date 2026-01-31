@@ -27,24 +27,24 @@ const transporter = nodemailer.createTransport({
 
 // Get all tours
 app.get('/api/tours', (req, res) => {
-    db.all('SELECT * FROM tours ORDER BY id', (err, rows) => {
-        if (err) {
-            console.error('Error fetching tours:', err.message);
-            return res.status(500).json({ error: 'Failed to fetch tours' });
-        }
-        res.json(rows);
-    });
+    try {
+        const tours = db.data.tours || [];
+        res.json(tours);
+    } catch (error) {
+        console.error('Error fetching tours:', error.message);
+        return res.status(500).json({ error: 'Failed to fetch tours' });
+    }
 });
 
 // Get all bookings (for admin purposes)
 app.get('/api/bookings', (req, res) => {
-    db.all('SELECT * FROM bookings ORDER BY created_at DESC', (err, rows) => {
-        if (err) {
-            console.error('Error fetching bookings:', err.message);
-            return res.status(500).json({ error: 'Failed to fetch bookings' });
-        }
-        res.json(rows);
-    });
+    try {
+        const bookings = db.data.bookings || [];
+        res.json(bookings.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
+    } catch (error) {
+        console.error('Error fetching bookings:', error.message);
+        return res.status(500).json({ error: 'Failed to fetch bookings' });
+    }
 });
 
 // Create a new booking
@@ -80,19 +80,26 @@ app.post('/api/bookings', async (req, res) => {
         }
     } while (await isReferenceExists(reference));
 
-    // Insert booking
-    const sql = `
-        INSERT INTO bookings (reference, tour_name, tour_price, tour_date, participants, customer_name, customer_email, customer_phone, special_requests)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    try {
+        // Create booking object
+        const booking = {
+            id: Date.now(), // Simple ID generation
+            reference,
+            tour_name: tourName,
+            tour_price: tourPrice,
+            tour_date: tourDate,
+            participants,
+            customer_name: customerName,
+            customer_email: customerEmail,
+            customer_phone: customerPhone,
+            special_requests: specialRequests || '',
+            status: 'confirmed',
+            created_at: new Date().toISOString()
+        };
 
-    db.run(sql, [reference, tourName, tourPrice, tourDate, participants, customerName, customerEmail, customerPhone, specialRequests || ''], function(err) {
-        if (err) {
-            console.error('Error creating booking:', err.message);
-            return res.status(500).json({ error: 'Failed to create booking' });
-        }
-
-        const bookingId = this.lastID;
+        // Add to database
+        db.data.bookings.push(booking);
+        await db.write();
 
         // Send confirmation email
         sendConfirmationEmail({
@@ -113,7 +120,7 @@ app.post('/api/bookings', async (req, res) => {
         res.status(201).json({
             success: true,
             booking: {
-                id: bookingId,
+                id: booking.id,
                 reference,
                 tourName,
                 tourPrice,
@@ -126,19 +133,17 @@ app.post('/api/bookings', async (req, res) => {
                 status: 'confirmed'
             }
         });
-    });
+    } catch (error) {
+        console.error('Error creating booking:', error.message);
+        return res.status(500).json({ error: 'Failed to create booking' });
+    }
 });
 
 // Helper function to check if reference exists
 function isReferenceExists(reference) {
-    return new Promise((resolve, reject) => {
-        db.get('SELECT id FROM bookings WHERE reference = ?', [reference], (err, row) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(!!row);
-            }
-        });
+    return new Promise((resolve) => {
+        const exists = db.data.bookings.some(booking => booking.reference === reference);
+        resolve(exists);
     });
 }
 
@@ -194,12 +199,5 @@ app.listen(PORT, () => {
 // Graceful shutdown
 process.on('SIGINT', () => {
     console.log('Shutting down server...');
-    db.close((err) => {
-        if (err) {
-            console.error('Error closing database:', err.message);
-        } else {
-            console.log('Database connection closed.');
-        }
-        process.exit(0);
-    });
+    process.exit(0);
 });
